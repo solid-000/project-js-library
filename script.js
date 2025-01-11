@@ -3,21 +3,53 @@ const addEntry = document.querySelector('.add-book');
 const bookModal = document.querySelector('.book-modal');
 const library = [];
 
+addToLibrary('Harry Potter', 'J.K. Rowling', 367, 'Read');
+
+displayLibrary();
+
 addEntry.addEventListener('click', ()=> bookModal.showModal());
-document.querySelector('.close-modal').addEventListener('click', ()=> bookModal.close());
+document.querySelector('.close-modal').addEventListener('click', ()=>{
+    bookModal.close();
+    clearInput();
+});
+
+document.querySelector('.main').addEventListener('click', event => {
+    let target = event.target;
+    switch(target.getAttribute('class')){
+        case 'delete-book':
+            deleteBook(target.getAttribute('data-index'));
+            break;
+    }
+});
 
 document.querySelector('.submit').addEventListener('click', function(){
-    addToLibrary(
-        document.querySelector('#add-title').value,
-        document.querySelector('#add-auth').value,
-        document.querySelector('#add-pages').value,
-        document.querySelector('input[name="stat"]:checked').value
-    );
-    bookModal.close();
-    while (container.firstChild){
-        container.removeChild(container.firstChild);
+
+    let name = document.querySelector('#add-title').value;
+    let aname = document.querySelector('#add-auth').value;
+    let num =  document.querySelector('#add-pages').value;
+    let stat = document.querySelector('input[name="stat"]:checked').value;
+    if(name == '' || aname == '' || num == ''){
+        alert('Please fill out all the available fields!');
+    }else{
+        addToLibrary(name, aname, num, stat);
+        bookModal.close();
+        clearLibrary();
+        displayLibrary();
+        clearInput();
     }
-    displayLibrary();
+
+    // Code for no validation
+    // addToLibrary(
+    //     document.querySelector('#add-title').value,
+    //     document.querySelector('#add-auth').value,
+    //     document.querySelector('#add-pages').value,
+    //     document.querySelector('input[name="stat"]:checked').value
+    // );
+    // bookModal.close();
+    // while (container.firstChild){
+    //     container.removeChild(container.firstChild);
+    // }
+    // displayLibrary();
 });
 
 function Book(title, author, pages, status){
@@ -35,6 +67,9 @@ function displayLibrary(){
     for(let book of library){
         let card = document.createElement('div');
         card.setAttribute('class', 'card');
+        let index = library.indexOf(book);
+        card.setAttribute('data-index', index);
+
 
         let title = document.createElement('div');
         title.setAttribute('class', 'title');
@@ -60,11 +95,31 @@ function displayLibrary(){
         status.innerText = `Status: ${book.status}`;
 
         let delBtn = document.createElement('button');
+        delBtn.setAttribute('data-index', index);   //attribute added to bind it to card
+        delBtn.setAttribute('class', 'delete-book');    //class added to trigger event listener
 
         card.appendChild(title);
         card.appendChild(pages);
         card.appendChild(status);
         card.appendChild(delBtn);
         container.appendChild(card);
+    }
+}
+
+function clearInput(){
+    document.querySelector('#add-title').value = '';
+    document.querySelector('#add-auth').value = '';
+    document.querySelector('#add-pages').value = '';
+}
+
+function deleteBook(index){
+    library.splice(index, 1);
+    clearLibrary();
+    displayLibrary();
+}
+
+function clearLibrary(){
+    while (container.firstChild){
+        container.removeChild(container.firstChild);
     }
 }
