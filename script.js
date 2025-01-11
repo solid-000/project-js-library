@@ -19,6 +19,9 @@ document.querySelector('.main').addEventListener('click', event => {
         case 'delete-book':
             deleteBook(target.getAttribute('data-index'));
             break;
+        case 'toggle-status':
+            toggleStatus(target.getAttribute('data-index'));
+            break;
     }
 });
 
@@ -37,19 +40,6 @@ document.querySelector('.submit').addEventListener('click', function(){
         displayLibrary();
         clearInput();
     }
-
-    // Code for no validation
-    // addToLibrary(
-    //     document.querySelector('#add-title').value,
-    //     document.querySelector('#add-auth').value,
-    //     document.querySelector('#add-pages').value,
-    //     document.querySelector('input[name="stat"]:checked').value
-    // );
-    // bookModal.close();
-    // while (container.firstChild){
-    //     container.removeChild(container.firstChild);
-    // }
-    // displayLibrary();
 });
 
 function Book(title, author, pages, status){
@@ -94,14 +84,24 @@ function displayLibrary(){
         let status = document.createElement('div');
         status.innerText = `Status: ${book.status}`;
 
-        let delBtn = document.createElement('button');
-        delBtn.setAttribute('data-index', index);   //attribute added to bind it to card
-        delBtn.setAttribute('class', 'delete-book');    //class added to trigger event listener
+        let btncont = document.createElement('div');
+        btncont.setAttribute('class', 'button-container');
+            let delBtn = document.createElement('button');
+            delBtn.setAttribute('data-index', index);
+            delBtn.setAttribute('class', 'delete-book');
+
+            let toggle = document.createElement('button');
+            toggle.setAttribute('class', 'toggle-status');
+            toggle.setAttribute('data-index', index);
+
+            btncont.appendChild(toggle);
+            btncont.appendChild(delBtn);
+
 
         card.appendChild(title);
         card.appendChild(pages);
         card.appendChild(status);
-        card.appendChild(delBtn);
+        card.appendChild(btncont);
         container.appendChild(card);
     }
 }
@@ -114,6 +114,12 @@ function clearInput(){
 
 function deleteBook(index){
     library.splice(index, 1);
+    clearLibrary();
+    displayLibrary();
+}
+
+function toggleStatus(index){
+    library[index].status = (library[index].status === 'Read') ? 'Not read' : 'Read';
     clearLibrary();
     displayLibrary();
 }
