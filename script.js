@@ -4,12 +4,6 @@ const bookModal = document.querySelector('.book-modal');
 const library = [];
 
 addToLibrary('Harry Potter', 'J.K. Rowling', 367, 'Read');
-addToLibrary('The Hobbit', 'J.R.R. Tolkien', 295, 'Not read');
-addToLibrary('1984', 'George Orwell', 328, 'Read');
-addToLibrary('To Kill a Mockingbird', 'Harper Lee', 281, 'Not read');
-addToLibrary('The Great Gatsby', 'F. Scott Fitzgerald', 180, 'Read');
-addToLibrary('Moby Dick', 'Herman Melville', 635, 'Not read');
-addToLibrary('Pride and Prejudice', 'Jane Austen', 432, 'Read');
 
 displayLibrary();
 
