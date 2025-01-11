@@ -36,7 +36,6 @@ document.querySelector('.submit').addEventListener('click', function(){
     }else{
         addToLibrary(name, aname, num, stat);
         bookModal.close();
-        clearLibrary();
         displayLibrary();
         clearInput();
     }
@@ -54,10 +53,12 @@ function addToLibrary(title, author, pages, status){
 }
 
 function displayLibrary(){
-    for(let book of library){
-        let card = document.createElement('div');
+    library.forEach((book, index) =>{
+        let card = document.querySelector(`[data-index='${index}']`);
+
+        if(!card){
+        card = document.createElement('div');
         card.setAttribute('class', 'card');
-        let index = library.indexOf(book);
         card.setAttribute('data-index', index);
 
 
@@ -103,8 +104,10 @@ function displayLibrary(){
         card.appendChild(status);
         card.appendChild(btncont);
         container.appendChild(card);
-    }
+        }
+    });
 }
+
 
 function clearInput(){
     document.querySelector('#add-title').value = '';
@@ -114,18 +117,17 @@ function clearInput(){
 
 function deleteBook(index){
     library.splice(index, 1);
-    clearLibrary();
-    displayLibrary();
+    let cardToRemove = container.querySelector(`[data-index='${index}']`);
+    if(cardToRemove){
+        cardToRemove.remove();
+    }
 }
 
 function toggleStatus(index){
     library[index].status = (library[index].status === 'Read') ? 'Not read' : 'Read';
-    clearLibrary();
-    displayLibrary();
-}
-
-function clearLibrary(){
-    while (container.firstChild){
-        container.removeChild(container.firstChild);
+    let card = container.querySelector(`[data-index='${index}'`);
+    let status = card.querySelector('.card div:nth-child(3)');
+    if(status){
+        status.innerText = `Status: ${library[index].status}`;
     }
 }
