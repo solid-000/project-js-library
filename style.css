@@ -1,10 +1,14 @@
+@font-face {
+    font-family: abel;
+    src: url(./fonts/abel-regular-webfont.woff2);
+}
 :root{
     --primary-color: #134e4a;
     --secondary-color: #ccfbf1;
+    --third-color: #042f2e;
 }
 *{
     box-sizing: border-box;
-    /* outline: 1px solid red; */
 }
 body{
     padding: 0;
@@ -47,7 +51,6 @@ body{
 .add-book:active{
     border: 2px solid lightgray;
     color: lightgray;
-    /* background-color: var(--secondary-color); */
 }
 
 .main{
@@ -76,8 +79,9 @@ body{
     font-weight: 700;
 }
 .author{
+    font-family: abel;
     font-style: italic;
-    font-size: 0.9rem;
+    font-size: 1rem;
     font-weight: 600;
 }
 .card>button{
@@ -93,4 +97,62 @@ body{
 }
 .card>button:active{
     background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z" /></svg>');
+}
+
+.book-modal{
+    width: calc(min(50vw, 500px));
+    height: 70vh;
+    border-radius: 20px;
+    border: 7px solid var(--primary-color);
+    padding: 0;
+    overflow: hidden;
+}
+.book-modal>form{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    padding: 20px 25px 30px;
+    gap: 15px;
+}
+.close-modal{
+    height: 40px;
+    width: 40px;
+    border: none;
+    align-self: flex-end;
+    margin-bottom: auto;
+    background-color: inherit;
+    cursor: pointer;
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" /></svg>');
+}
+.close-modal:active{
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="gray"><path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" /></svg>');
+}
+.submit{
+    height: 50px;
+    margin-top: auto;
+    font-size: 1.5rem;
+    font-weight: 700;
+    background-color: var(--primary-color);
+    border: none;
+    color: white;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.submit:active{
+    background-color: var(--third-color);
+}
+.book-modal>form>div{
+    display: flex;
+    flex-direction: column;
+}
+.book-modal input[type='text'], .book-modal input[type='number']{
+    padding: 3px 8px;
+    height: 40px;
+    border: 2px solid var(--primary-color);
+    border-radius: 10px;
+    font-size: 1.2rem;
+}
+.book-modal>form>div>label, .radio-label{
+    font-size: 1.4rem;
 }
